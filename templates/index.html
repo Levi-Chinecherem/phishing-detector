@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .animate-slide-in {
+            animation: slideIn 0.7s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(251, 146, 60, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(251, 146, 60, 0.8);
+            }
+        }
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center px-4">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full animate-slide-in">
+        <h1 class="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600 mb-4 animate-pulse-glow">
+            Phishing Detector
+        </h1>
+        <p class="text-gray-600 text-center mb-6 text-lg">
+            Scan any URL for phishing risks with AI-powered detection.
+        </p>
+        <form action="/predict" method="post" class="space-y-6">
+            <div>
+                <label for="url" class="block text-sm font-medium text-gray-700">
+                    Enter Website URL
+                </label>
+                <input
+                    type="text"
+                    id="url"
+                    name="url"
+                    required
+                    class="mt-2 block w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-gray-50 transition duration-300 animate-pulse-glow"
+                    placeholder="https://example.com"
+                >
+            </div>
+            <button
+                type="submit"
+                class="w-full gradient-bg text-white p-4 rounded-lg hover-scale transition duration-300 font-semibold text-lg"
+            >
+                Scan for Phishing
+            </button>
+        </form>
+        <p class="text-center text-gray-500 text-sm mt-6">
+            Powered by Random Forest ML Model
+        </p>
+    </div>
+</body>
+</html>
