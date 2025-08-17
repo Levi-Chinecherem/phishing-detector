@@ -129,3 +129,36 @@ git push -u origin main
 - Suspicious keywords feature can be added for enhanced detection.
 - Long URLs are handled with proper text wrapping in the UI.
 - The UI uses a warning-themed orange gradient with animations for a modern look.
+
+## Synthetic Phishing URLs for Testing
+These URLs are designed to trigger phishing detection based on common suspicious features (e.g., typosquatting, subdomains, non-HTTPS, or unusual characters). They are **not real websites** and are safe for testing:
+
+1. `http://paypa1.com/login`  
+   - Mimics PayPal with a typo (`paypa1` instead of `paypal`). Likely to trigger `having_Sub_Domain` or `Prefix_Suffix` as suspicious (-1).
+
+2. `http://secure-netflix-billing.com/account`  
+   - Imitates Netflix with a fake subdomain and non-HTTPS. Should flag `SSLfinal_State` (-1) and `having_Sub_Domain` (-1).
+
+3. `http://amaz0n-support.net/reset`  
+   - Typosquatting on Amazon (`amaz0n`) with a different TLD. Likely to trigger `having_Sub_Domain` or domain mismatch.
+
+4. `http://bankofamerica-login.secure-access.xyz`  
+   - Spoofs Bank of America with a deceptive subdomain structure. Should flag `having_Sub_Domain` (-1) and `SSLfinal_State` (-1).
+
+5. `http://g00gle.com@malicious-site.info`  
+   - Uses a homograph attack (`g00gle` instead of `google`) and an `@` symbol redirect. Should trigger `having_At_Symbol` (-1).
+
+6. `http://tinyurl.com.redirect@phish-site.com`  
+   - Mimics a URL shortener with a redirect. Likely to flag `Shortining_Service` (-1) and `having_At_Symbol` (-1).
+
+7. `http://192.168.1.1.login-page.com`  
+   - Uses an IP address in the hostname, a common phishing tactic. Should trigger `having_IP_Address` (-1).
+
+8. `http://microsoft-security-alert.com//update`  
+   - Includes double slashes after the protocol, mimicking a redirect. Should flag `double_slash_redirecting` (-1).
+
+9. `http://login-secure.com/https/amazon`  
+   - Contains `https` in the hostname, a deceptive tactic. Should trigger `HTTPS_token` (-1).
+
+10. `http://apple-support-1234567890.com/repair`  
+    - Long, suspicious domain with numbers and hyphens. Likely to flag `Prefix_Suffix` (-1) and `URL_Length` (-1).

@@ -3,6 +3,10 @@
 VENV_DIR="env"
 MODEL_FILE="models/random_forest_model.pkl"
 URL="http://127.0.0.1:8000"
+REPO_URL="git@github.com:Levi-Chinecherem/phishing-detector.git"
+
+# Set PYTHONPATH to project root
+export PYTHONPATH=$(pwd):$PYTHONPATH
 
 # Check if virtual environment exists, create if not
 if [ ! -d "$VENV_DIR" ]; then
@@ -17,11 +21,21 @@ source $VENV_DIR/bin/activate
 echo "Installing dependencies..."
 pip install -r requirements.txt
 
+# Configure Git remote
+echo "Configuring Git remote..."
+git remote remove origin 2>/dev/null || true
+git remote add origin $REPO_URL
+git remote -v
+
 # Check if model exists, train if not
 if [ ! -f "$MODEL_FILE" ]; then
     echo "Training model..."
     python src/train_model.py
 fi
+
+# Run test URLs
+echo "Testing URLs..."
+python src/test_urls.py
 
 # Start FastAPI server
 echo "Starting FastAPI server..."

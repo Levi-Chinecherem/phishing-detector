@@ -9,6 +9,7 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 model = None
+OPTIMAL_THRESHOLD = 0.4  # Set based on typical ROC analysis; adjust after checking results/roc_curve.png
 
 @app.on_event("startup")
 async def startup_event():
@@ -23,21 +24,10 @@ async def home(request: Request):
 @app.post("/predict", response_class=HTMLResponse)
 async def predict(request: Request, url: str = Form(...)):
     features = extract_features_from_url(url)
-    prediction = model.predict(features)[0]
     proba = model.predict_proba(features)[0]
-    # Assuming model.classes_ = [-1, 1]
-    if np.array_equal(model.classes_, np.array([-1, 1])):
-        phishing_idx = 0
-        legit_idx = 1
-    else:
-        phishing_idx = 1
-        legit_idx = 0
-    if prediction == 1:
-        result = "Legitimate"
-        confidence = proba[legit_idx]
-    else:
-        result = "Phishing"
-        confidence = proba[phishing_idx]
+    prediction = 1 if proba[1] >= OPTIMAL_THRESHOLD else 0  # 0: Phishing, 1: Legitimate
+    result = "Legitimate" if prediction == 1 else "Phishing"
+    confidence = proba[1] if prediction == 1 else proba[0]
     confidence_str = f"{confidence * 100:.2f}%"
     features_dict = features.iloc[0].to_dict()
     return templates.TemplateResponse("result.html", {

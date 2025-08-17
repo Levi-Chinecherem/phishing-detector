@@ -1,0 +1,11 @@
+having_IP_Address,URL_Length,Shortining_Service,having_At_Symbol,double_slash_redirecting,Prefix_Suffix,having_Sub_Domain,SSLfinal_State,HTTPS_token,Suspicious_Keywords,Prediction,Confidence
+1,1,1,1,1,-1,0,1,1,,Legitimate,0.9209191
+1,1,1,-1,1,-1,1,0,1,,Phishing,0.49178842
+-1,-1,-1,1,-1,-1,1,1,-1,,Legitimate,0.9890147
+1,-1,1,1,1,-1,1,1,1,,Legitimate,0.9028394
+1,1,-1,-1,1,-1,1,1,1,,Legitimate,0.9497443
+1,1,1,1,-1,-1,1,1,-1,,Legitimate,0.98974717
+-1,-1,-1,1,-1,1,-1,1,-1,,Legitimate,0.99972266
+1,-1,1,1,1,-1,1,1,1,,Legitimate,0.9028394
+-1,-1,1,1,1,-1,-1,-1,1,,Phishing,0.044700842
+1,-1,1,-1,1,-1,0,-1,1,,Phishing,0.023689657

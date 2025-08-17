@@ -7,3 +7,4 @@ pandas
 requests
 matplotlib
 python-multipart
+xgboost
